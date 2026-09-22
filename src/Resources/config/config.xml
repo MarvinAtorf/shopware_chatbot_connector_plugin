@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
+
+    <card>
+        <title>Allgemein</title>
+        <title lang="en-GB">General</title>
+
+        <input-field type="bool">
+            <name>active</name>
+            <label>Plugin aktiv</label>
+            <label lang="en-GB">Plugin active</label>
+            <defaultValue>true</defaultValue>
+        </input-field>
+    </card>
+
+    <card>
+        <title>RAG-Indexierung</title>
+        <title lang="en-GB">RAG indexing</title>
+
+        <component name="sw-entity-single-select">
+            <name>categoryOne</name>
+            <entity>category</entity>
+            <label>Kategorie 1</label>
+            <label lang="en-GB">Category 1</label>
+            <helpText>Erste Kategorie, die dem Chatbot als Wissensquelle (RAG) dient.</helpText>
+            <helpText lang="en-GB">First category used as a knowledge source (RAG) for the chatbot.</helpText>
+        </component>
+
+        <component name="sw-entity-single-select">
+            <name>categoryTwo</name>
+            <entity>category</entity>
+            <label>Kategorie 2 (optional)</label>
+            <label lang="en-GB">Category 2 (optional)</label>
+        </component>
+    </card>
+</config>
