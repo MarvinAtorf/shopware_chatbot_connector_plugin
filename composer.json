@@ -1,0 +1,31 @@
+{
+    "name": "marvin-atorf/shopware-chatbot-connector-plugin",
+    "description": "Connector plugin that links a Shopware 6 shop to the external AI chatbot backend (order status, product lookups, chatbot API context).",
+    "version": "0.1.0",
+    "type": "shopware-platform-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marvin Atorf"
+        }
+    ],
+    "require": {
+        "shopware/core": "~6.7.0"
+    },
+    "extra": {
+        "shopware-plugin-class": "ShopwareChatbotConnectorPlugin\\ShopwareChatbotConnectorPlugin",
+        "label": {
+            "de-DE": "Shopware Chatbot Connector",
+            "en-GB": "Shopware Chatbot Connector"
+        },
+        "description": {
+            "de-DE": "Verbindet den Shop mit dem externen KI-Chatbot-Backend.",
+            "en-GB": "Connects the shop to the external AI chatbot backend."
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "ShopwareChatbotConnectorPlugin\\": "src/"
+        }
+    }
+}
