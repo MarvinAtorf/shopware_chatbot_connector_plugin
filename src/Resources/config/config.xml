@@ -19,7 +19,7 @@
         <title lang="en-GB">RAG indexing</title>
 
         <component name="sw-entity-single-select">
-            <name>categoryOne</name>
+            <name>ragCategory1</name>
             <entity>category</entity>
             <label>Kategorie 1</label>
             <label lang="en-GB">Category 1</label>
@@ -28,10 +28,32 @@
         </component>
 
         <component name="sw-entity-single-select">
-            <name>categoryTwo</name>
+            <name>ragCategory2</name>
             <entity>category</entity>
             <label>Kategorie 2 (optional)</label>
             <label lang="en-GB">Category 2 (optional)</label>
         </component>
+    </card>
+
+    <card>
+        <title>Backend-Anbindung</title>
+        <title lang="en-GB">Backend connection</title>
+
+        <input-field type="url">
+            <name>backendUrl</name>
+            <label>FastAPI-Backend-URL</label>
+            <label lang="en-GB">FastAPI backend URL</label>
+            <placeholder>https://chatbot.example.com</placeholder>
+            <helpText>Basis-URL deines FastAPI-Backends, z. B. https://chatbot.example.com</helpText>
+            <helpText lang="en-GB">Base URL of your FastAPI backend.</helpText>
+        </input-field>
+
+        <input-field type="password">
+            <name>backendApiKey</name>
+            <label>API-Key</label>
+            <label lang="en-GB">API key</label>
+            <helpText>Wird als Authorization-Header an das Backend gesendet.</helpText>
+            <helpText lang="en-GB">Sent as Authorization header to the backend.</helpText>
+        </input-field>
     </card>
 </config>

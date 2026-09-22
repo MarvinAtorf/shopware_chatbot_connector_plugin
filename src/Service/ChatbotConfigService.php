@@ -23,8 +23,8 @@ class ChatbotConfigService
     public function getRagCategoryIds(?string $salesChannelId = null): array
     {
         $ids = [
-            $this->systemConfigService->get(self::CONFIG_DOMAIN . 'categoryOne', $salesChannelId),
-            $this->systemConfigService->get(self::CONFIG_DOMAIN . 'categoryTwo', $salesChannelId),
+            $this->systemConfigService->get(self::CONFIG_DOMAIN . 'ragCategory1', $salesChannelId),
+            $this->systemConfigService->get(self::CONFIG_DOMAIN . 'ragCategory2', $salesChannelId),
         ];
 
         return array_values(array_filter($ids));
