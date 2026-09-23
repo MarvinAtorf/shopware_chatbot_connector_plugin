@@ -8,6 +8,11 @@ class ChatbotConfigService
 {
     private const CONFIG_DOMAIN = 'ShopwareChatbotConnectorPlugin.config.';
 
+    // Feste Backend-URL, da sie sich pro Installation nicht ändert.
+    // "host.docker.internal" statt "localhost", weil der Container ein eigenes localhost hat
+    // und damit auf den Windows-Host zeigen muss, auf dem das FastAPI-Backend läuft.
+    private const BACKEND_URL = 'http://host.docker.internal:8000';
+
     public function __construct(private readonly SystemConfigService $systemConfigService)
     {
     }
@@ -28,5 +33,17 @@ class ChatbotConfigService
         ];
 
         return array_values(array_filter($ids));
+    }
+
+    public function getBackendUrl(): string
+    {
+        return rtrim(self::BACKEND_URL, '/');
+    }
+
+    public function getBackendApiKey(?string $salesChannelId = null): ?string
+    {
+        $key = $this->systemConfigService->getString(self::CONFIG_DOMAIN . 'backendApiKey', $salesChannelId);
+
+        return $key !== '' ? $key : null;
     }
 }

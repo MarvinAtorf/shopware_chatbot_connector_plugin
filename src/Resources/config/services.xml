@@ -14,5 +14,10 @@
             <argument type="service" id="ShopwareChatbotConnectorPlugin\Service\ChatbotConfigService"/>
         </service>
 
+        <service id="ShopwareChatbotConnectorPlugin\SalesChannel\ChatbotMessageRoute" public="true">
+            <argument type="service" id="ShopwareChatbotConnectorPlugin\Service\ChatbotConfigService"/>
+            <argument type="service" id="Symfony\Contracts\HttpClient\HttpClientInterface"/>
+        </service>
+
     </services>
 </container>

@@ -14,12 +14,18 @@ class ChatbotContextStruct extends Struct
         protected string $salesChannelId,
         protected ?string $customerId,
         protected array $ragCategoryIds,
+        protected string $backendUrl,
     ) {
     }
 
     public function getActive(): bool
     {
         return $this->active;
+    }
+
+    public function getBackendUrl(): string
+    {
+        return $this->backendUrl;
     }
 
     public function getSalesChannelId(): string

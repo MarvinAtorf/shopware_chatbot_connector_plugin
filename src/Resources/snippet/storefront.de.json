@@ -1,0 +1,14 @@
+{
+    "chatbot-connector": {
+        "widget": {
+            "title": "Chat-Assistent",
+            "status": "Online",
+            "greeting": "Hallo! Wie kann ich dir helfen?",
+            "placeholder": "Nachricht schreiben ...",
+            "send": "Senden",
+            "open": "Chat öffnen",
+            "close": "Chat schließen",
+            "pendingReply": "Die Anbindung an das Chatbot-Backend folgt im nächsten Schritt."
+        }
+    }
+}

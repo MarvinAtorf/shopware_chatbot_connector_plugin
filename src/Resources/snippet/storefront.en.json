@@ -1,0 +1,14 @@
+{
+    "chatbot-connector": {
+        "widget": {
+            "title": "Chat Assistant",
+            "status": "Online",
+            "greeting": "Hi! How can I help you?",
+            "placeholder": "Type a message ...",
+            "send": "Send",
+            "open": "Open chat",
+            "close": "Close chat",
+            "pendingReply": "The connection to the chatbot backend is coming in the next step."
+        }
+    }
+}

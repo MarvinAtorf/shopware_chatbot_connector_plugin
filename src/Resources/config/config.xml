@@ -39,15 +39,6 @@
         <title>Backend-Anbindung</title>
         <title lang="en-GB">Backend connection</title>
 
-        <input-field type="url">
-            <name>backendUrl</name>
-            <label>FastAPI-Backend-URL</label>
-            <label lang="en-GB">FastAPI backend URL</label>
-            <placeholder>https://chatbot.example.com</placeholder>
-            <helpText>Basis-URL deines FastAPI-Backends, z. B. https://chatbot.example.com</helpText>
-            <helpText lang="en-GB">Base URL of your FastAPI backend.</helpText>
-        </input-field>
-
         <input-field type="password">
             <name>backendApiKey</name>
             <label>API-Key</label>

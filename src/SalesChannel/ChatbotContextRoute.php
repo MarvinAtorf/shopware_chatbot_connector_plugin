@@ -36,6 +36,7 @@ class ChatbotContextRoute extends AbstractChatbotContextRoute
             salesChannelId: $salesChannelId,
             customerId: $context->getCustomer()?->getId(),
             ragCategoryIds: $this->chatbotConfigService->getRagCategoryIds($salesChannelId),
+            backendUrl: $this->chatbotConfigService->getBackendUrl(),
         );
 
         return new ChatbotContextRouteResponse($struct);
