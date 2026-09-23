@@ -3,22 +3,26 @@ const { PluginBaseClass } = window;
 /**
  * Storefront chat widget.
  *
- * This plugin only handles the widget's UI (open/close, rendering messages).
- * Sending a message to the actual chatbot backend (FastAPI / RAG) is
- * deliberately NOT wired up here yet — that needs a server-side proxy route
- * so the backend API key never reaches the browser, and the actual chatbot
- * logic is being built separately, not by Claude on its own. See
- * ChatbotConfigService / ChatbotContextRoute for the existing plugin-side
- * config plumbing this widget will eventually talk to.
+ * Sends messages to the plugin's own storefront proxy route
+ * (`POST /widgets/chatbot-connector/message`), which forwards them
+ * server-side to the FastAPI backend and attaches the backend API key there
+ * (never in the browser). See:
+ *   - ShopwareChatbotConnectorPlugin\Storefront\Controller\ChatbotController (PHP proxy)
+ *   - fastapi-backend/app/routers/chat.py (actual backend endpoint)
+ *
+ * This is a plain storefront AJAX route (session-based), not a Store-API
+ * route, so no sw-access-key is needed here.
+ *
+ * This plugin only handles the widget's UI and the HTTP call to our own
+ * proxy route — no chatbot / RAG / LLM logic lives here.
  */
 export default class ChatbotWidgetPlugin extends PluginBaseClass {
     static options = {
-        replyDelay: 900,
+        messageRouteUrl: '/widgets/chatbot-connector/message',
+        errorReplyText: 'Entschuldigung, der Chat ist gerade nicht erreichbar. Bitte versuch es später erneut.',
     };
 
     init() {
-        this.pendingReplyText = this.el.dataset.chatbotWidgetPendingReply;
-
         this.toggleButton = this.el.querySelector('[data-chatbot-widget-toggle]');
         this.closeButton = this.el.querySelector('[data-chatbot-widget-close]');
         this.panel = this.el.querySelector('.chatbot-widget__panel');
@@ -76,15 +80,44 @@ export default class ChatbotWidgetPlugin extends PluginBaseClass {
 
         const typingBubble = this._appendTyping();
 
-        // TODO: Hier später die Antwort über eine serverseitige Route holen,
-        // die intern ChatbotConfigService nutzt und den API-Key gegenüber dem
-        // FastAPI-Backend anhängt (nie direkt aus dem Browser heraus).
-        window.setTimeout(() => {
-            typingBubble.remove();
-            this._appendMessage(this.pendingReplyText, 'bot');
-            this._setInputDisabled(false);
-            this.input.focus();
-        }, this.options.replyDelay);
+        this._sendMessage(text)
+            .then((reply) => {
+                typingBubble.remove();
+                this._appendMessage(reply, 'bot');
+            })
+            .catch(() => {
+                typingBubble.remove();
+                this._appendMessage(this.options.errorReplyText, 'bot');
+            })
+            .finally(() => {
+                this._setInputDisabled(false);
+                this.input.focus();
+            });
+    }
+
+    _sendMessage(text) {
+        return fetch(this.options.messageRouteUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+            body: JSON.stringify({ message: text }),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Chatbot request failed with status ${response.status}`);
+                }
+
+                return response.json();
+            })
+            .then((data) => {
+                if (typeof data.reply !== 'string') {
+                    throw new Error('Chatbot response did not contain a reply.');
+                }
+
+                return data.reply;
+            });
     }
 
     _appendMessage(text, role) {
